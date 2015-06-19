@@ -10,9 +10,14 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
     }
 
     _Class.prototype.size = function() {
-      this.height = window.innerHeight;
-      this.width = window.innerWidth;
-      return this.renderer.setSize(this.width, this.height);
+      var height, width;
+      height = window.innerHeight;
+      width = window.innerWidth;
+      console.log("" + width + "x" + height);
+      this.renderer.setSize(width, height);
+      this.height = this.renderer.domElement.height;
+      this.width = this.renderer.domElement.width;
+      return console.log("" + this.width + "x" + this.height);
     };
 
     _Class.prototype.init = function() {
@@ -148,18 +153,6 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
     _Class.prototype.animate = function() {
       var t;
       t = this.clock.getElapsedTime();
-      if (this.keys[37]) {
-        this.cameras.rotation.y += 0.1;
-      }
-      if (this.pressed(this.keys[38])) {
-        this.cameras.translateZ(-50);
-      }
-      if (this.keys[39]) {
-        this.cameras.rotation.y += -0.1;
-      }
-      if (this.pressed(this.keys[40])) {
-        this.cameras.translateZ(50);
-      }
       this.ghost.animate(t);
       if (this.keys[87]) {
         this.bunnies[0].run(t, 0);

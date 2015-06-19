@@ -6,9 +6,13 @@ define [
 
   new class
     size: ->
-      @height = window.innerHeight
-      @width = window.innerWidth
-      @renderer.setSize @width, @height
+      height = window.innerHeight
+      width = window.innerWidth
+      console.log "#{width}x#{height}"
+      @renderer.setSize width, height
+      @height = @renderer.domElement.height
+      @width = @renderer.domElement.width
+      console.log "#{@width}x#{@height}"
       
     init: ->
       Physijs.scripts.ammo = "../ammo.js/builds/ammo.js"
@@ -133,10 +137,10 @@ define [
       t = @clock.getElapsedTime()
       
       # move the camera in the @scene
-      @cameras.rotation.y += 0.1  if @keys[37] # left
-      @cameras.translateZ -50  if @pressed(@keys[38]) # forward
-      @cameras.rotation.y += -0.1  if @keys[39] # right
-      @cameras.translateZ 50  if @pressed(@keys[40]) # reverse
+      #@cameras.rotation.y += 0.1  if @keys[37] # left
+      #@cameras.translateZ -50  if @pressed(@keys[38]) # forward
+      #@cameras.rotation.y += -0.1  if @keys[39] # right
+      #@cameras.translateZ 50  if @pressed(@keys[40]) # reverse
       
       @ghost.animate t
       @bunnies[0].run t, 0  if @keys[87]
