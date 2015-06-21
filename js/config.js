@@ -29,6 +29,7 @@ require.config({
 });
 
 require(["app", "container"], function(app, container) {
+  window.apphandle = app;
   app.init();
   return app.runSimulation();
 });

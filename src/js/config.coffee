@@ -29,6 +29,7 @@ require [
   "app"
   "container"
 ], (app, container) ->
+  window.apphandle = app
   app.init()
   app.runSimulation()
 
