@@ -1,7 +1,7 @@
 {
   "version": "0.3",
-  "name": "Bunny the Hunter",
-  "description": "Bunny the Hunter game",
+  "name": "Hunter Bunny",
+  "description": "Hunter Bunny game",
   "launch_path": "/index.html",
   "icons": {
     "16": "/app-icons/icon-16.png",

@@ -8,11 +8,9 @@ define [
     size: ->
       height = window.innerHeight
       width = window.innerWidth
-      #console.log "#{width}x#{height}"
       @renderer.setSize width, height
       @height = @renderer.domElement.height
       @width = @renderer.domElement.width
-      #console.log "#{@width}x#{@height}"
       
     init: ->
       Physijs.scripts.ammo = "../ammo.js/builds/ammo.js"
@@ -115,9 +113,10 @@ define [
           if(Math.abs(gamma) > 90)
             beta = 180 - beta
           [beta, gamma]
-        rotation = forward - 90
-        #console.log rotation
-        @cameras.rotation.x = rotation * 3.14 / 180
+        rotation = (forward - 90) * 3.14 / 180
+        @cameras.rotation.x = rotation * Math.cos(@cameras.rotation.y)
+        @cameras.rotation.z = rotation * Math.sin(@cameras.rotation.y)
+        console.log "#{@cameras.rotation.x},#{@cameras.rotation.z}"
         @keys[37] ||= 0
         @keys[38] ||= 0
         @keys[39] ||= 0

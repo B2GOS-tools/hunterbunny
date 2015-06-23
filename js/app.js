@@ -117,8 +117,10 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
         return function(event) {
           var beta, forward, gamma, rotation, side, _base, _base1, _base2, _base3, _ref;
           _ref = _this.width < _this.height ? [event.beta, event.gamma] : (beta = -event.gamma, gamma = event.beta, Math.abs(gamma) > 90 ? beta = 180 - beta : void 0, [beta, gamma]), forward = _ref[0], side = _ref[1];
-          rotation = forward - 90;
-          _this.cameras.rotation.x = rotation * 3.14 / 180;
+          rotation = (forward - 90) * 3.14 / 180;
+          _this.cameras.rotation.x = rotation * Math.cos(_this.cameras.rotation.y);
+          _this.cameras.rotation.z = rotation * Math.sin(_this.cameras.rotation.y);
+          console.log("" + _this.cameras.rotation.x + "," + _this.cameras.rotation.z);
           (_base = _this.keys)[37] || (_base[37] = 0);
           (_base1 = _this.keys)[38] || (_base1[38] = 0);
           (_base2 = _this.keys)[39] || (_base2[39] = 0);
