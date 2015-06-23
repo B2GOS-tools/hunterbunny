@@ -6,6 +6,7 @@ define [
 
   new class
     size: ->
+      # workaround! height/width have to be fetched this way
       height = window.innerHeight
       width = window.innerWidth
       @renderer.setSize width, height
@@ -107,7 +108,7 @@ define [
           # in portrait, these work as documented
           [event.beta, event.gamma]
         else
-          # in landscape, they are reversed and scrambled
+          # workaround! in landscape, beta and gamma are reversed and scrambled
           beta = -event.gamma
           gamma = event.beta
           if(Math.abs(gamma) > 90)
@@ -118,6 +119,7 @@ define [
         @cameras.rotation.y = compass
         @cameras.rotation.x = rotation * Math.cos compass
         @cameras.rotation.z = rotation * Math.sin compass
+        #console.log "#{@cameras.rotation.x},#{@cameras.rotation.y},#{@cameras.rotation.z}"
         @keys[37] ||= 0
         @keys[38] ||= 0
         @keys[39] ||= 0
