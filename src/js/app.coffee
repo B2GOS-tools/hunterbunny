@@ -30,7 +30,7 @@ define [
       @smoothness = 60
       @keys = []
 
-      # 0 = no 3d; 1 = cardboard, preserve aspect; 2 = tv, adjust aspect
+      # 0 = no 3d; 1 = cardboard, preserve aspect; 2 = tv, adjust aspect ratio
       @in3d = 1
       separation = 10
       @cameras = new THREE.Object3D()
@@ -115,32 +115,10 @@ define [
             beta = 180 - beta
           [beta, gamma]
         @turn = event.alpha
-        @keys[37] ||= 0
-        @keys[38] ||= 0
-        @keys[39] ||= 0
-        @keys[40] ||= 0
-        if forward < -50
-          @keys[40] += 1
-          @keys[38] = 0
-        else if forward > -10
-          @keys[38] += 1
-          @keys[40] = 0
-        else
-          @keys[38] = @keys[40] = 0
-        if side < -15
-          @keys[37] += 1
-          @keys[39] = 0
-        else if side > 15
-          @keys[39] += 1
-          @keys[37] = 0
-        else
-          @keys[37] = @keys[39] = 0
         ), true
+
       @axis = new THREE.Vector3 1,0,0
       @clock = new THREE.Clock()
-
-    pressed: (key) ->
-      key > 0 && key < 100
 
     animate: =>
       t = @clock.getElapsedTime()
@@ -149,20 +127,9 @@ define [
       compass = @turn * 3.14 / 180
       @cameras.rotation.set 0, compass, 0
       @cameras.rotateOnAxis @axis, rotation
-
-      # move the camera in the @scene
-      #@cameras.rotation.y += 0.1  if @keys[37] # left
-      #@cameras.translateZ -50  if @pressed(@keys[38]) # forward
-      #@cameras.rotation.y += -0.1  if @keys[39] # right
-      #@cameras.translateZ 50  if @pressed(@keys[40]) # reverse
       
       @ghost.animate t
-      @bunnies[0].run t, 0  if @keys[87]
-      @bunnies[0].run t, -1  if @keys[65]
-      @bunnies[0].run t, 1  if @keys[68]
-      @frogs[0].run t, 0  if @keys[89]
-      @frogs[0].run t, -1  if @keys[71]
-      @frogs[0].run t, 1  if @keys[74]
+
       @bunnies.forEach (bunny) =>
         bunny.run t, 0  if @keys[90]
         bunny.animate t

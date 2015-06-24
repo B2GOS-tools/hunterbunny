@@ -115,39 +115,13 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       })(this));
       window.addEventListener('deviceorientation', ((function(_this) {
         return function(event) {
-          var beta, gamma, _base, _base1, _base2, _base3, _ref;
+          var beta, gamma, _ref;
           _ref = _this.width < _this.height ? [event.beta, event.gamma] : (beta = -event.gamma, gamma = event.beta, Math.abs(gamma) > 90 ? beta = 180 - beta : void 0, [beta, gamma]), _this.forward = _ref[0], _this.side = _ref[1];
-          _this.turn = event.alpha;
-          (_base = _this.keys)[37] || (_base[37] = 0);
-          (_base1 = _this.keys)[38] || (_base1[38] = 0);
-          (_base2 = _this.keys)[39] || (_base2[39] = 0);
-          (_base3 = _this.keys)[40] || (_base3[40] = 0);
-          if (forward < -50) {
-            _this.keys[40] += 1;
-            _this.keys[38] = 0;
-          } else if (forward > -10) {
-            _this.keys[38] += 1;
-            _this.keys[40] = 0;
-          } else {
-            _this.keys[38] = _this.keys[40] = 0;
-          }
-          if (side < -15) {
-            _this.keys[37] += 1;
-            return _this.keys[39] = 0;
-          } else if (side > 15) {
-            _this.keys[39] += 1;
-            return _this.keys[37] = 0;
-          } else {
-            return _this.keys[37] = _this.keys[39] = 0;
-          }
+          return _this.turn = event.alpha;
         };
       })(this)), true);
       this.axis = new THREE.Vector3(1, 0, 0);
       return this.clock = new THREE.Clock();
-    };
-
-    _Class.prototype.pressed = function(key) {
-      return key > 0 && key < 100;
     };
 
     _Class.prototype.animate = function() {
@@ -158,24 +132,6 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       this.cameras.rotation.set(0, compass, 0);
       this.cameras.rotateOnAxis(this.axis, rotation);
       this.ghost.animate(t);
-      if (this.keys[87]) {
-        this.bunnies[0].run(t, 0);
-      }
-      if (this.keys[65]) {
-        this.bunnies[0].run(t, -1);
-      }
-      if (this.keys[68]) {
-        this.bunnies[0].run(t, 1);
-      }
-      if (this.keys[89]) {
-        this.frogs[0].run(t, 0);
-      }
-      if (this.keys[71]) {
-        this.frogs[0].run(t, -1);
-      }
-      if (this.keys[74]) {
-        this.frogs[0].run(t, 1);
-      }
       this.bunnies.forEach((function(_this) {
         return function(bunny) {
           if (_this.keys[90]) {
