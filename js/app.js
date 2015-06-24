@@ -115,13 +115,9 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       })(this));
       window.addEventListener('deviceorientation', ((function(_this) {
         return function(event) {
-          var beta, compass, forward, gamma, rotation, side, _base, _base1, _base2, _base3, _ref;
-          _ref = _this.width < _this.height ? [event.beta, event.gamma] : (beta = -event.gamma, gamma = event.beta, Math.abs(gamma) > 90 ? beta = 180 - beta : void 0, [beta, gamma]), forward = _ref[0], side = _ref[1];
-          rotation = (forward - 90) * 3.14 / 180;
-          compass = event.alpha * 3.14 / 180;
-          _this.cameras.rotation.y = compass;
-          _this.cameras.rotation.x = rotation * Math.cos(compass);
-          _this.cameras.rotation.z = rotation * Math.sin(compass);
+          var beta, gamma, _base, _base1, _base2, _base3, _ref;
+          _ref = _this.width < _this.height ? [event.beta, event.gamma] : (beta = -event.gamma, gamma = event.beta, Math.abs(gamma) > 90 ? beta = 180 - beta : void 0, [beta, gamma]), _this.forward = _ref[0], _this.side = _ref[1];
+          _this.turn = event.alpha;
           (_base = _this.keys)[37] || (_base[37] = 0);
           (_base1 = _this.keys)[38] || (_base1[38] = 0);
           (_base2 = _this.keys)[39] || (_base2[39] = 0);
@@ -146,6 +142,7 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
           }
         };
       })(this)), true);
+      this.axis = new THREE.Vector3(1, 0, 0);
       return this.clock = new THREE.Clock();
     };
 
@@ -154,8 +151,12 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
     };
 
     _Class.prototype.animate = function() {
-      var t;
+      var compass, rotation, t;
       t = this.clock.getElapsedTime();
+      rotation = (this.forward - 90) * 3.14 / 180;
+      compass = this.turn * 3.14 / 180;
+      this.cameras.rotation.set(0, compass, 0);
+      this.cameras.rotateOnAxis(this.axis, rotation);
       this.ghost.animate(t);
       if (this.keys[87]) {
         this.bunnies[0].run(t, 0);

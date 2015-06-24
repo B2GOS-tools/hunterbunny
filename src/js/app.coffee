@@ -104,7 +104,7 @@ define [
         return
         
       window.addEventListener 'deviceorientation', ((event) =>
-        [forward, side] = if @width < @height
+        [@forward, @side] = if @width < @height
           # in portrait, these work as documented
           [event.beta, event.gamma]
         else
@@ -114,12 +114,7 @@ define [
           if(Math.abs(gamma) > 90)
             beta = 180 - beta
           [beta, gamma]
-        rotation = (forward - 90) * 3.14 / 180
-        compass = event.alpha * 3.14 / 180
-        @cameras.rotation.y = compass
-        @cameras.rotation.x = rotation * Math.cos compass
-        @cameras.rotation.z = rotation * Math.sin compass
-        #console.log "#{@cameras.rotation.x},#{@cameras.rotation.y},#{@cameras.rotation.z}"
+        @turn = event.alpha
         @keys[37] ||= 0
         @keys[38] ||= 0
         @keys[39] ||= 0
@@ -141,7 +136,7 @@ define [
         else
           @keys[37] = @keys[39] = 0
         ), true
-
+      @axis = new THREE.Vector3 1,0,0
       @clock = new THREE.Clock()
 
     pressed: (key) ->
@@ -150,6 +145,11 @@ define [
     animate: =>
       t = @clock.getElapsedTime()
       
+      rotation = (@forward - 90) * 3.14 / 180
+      compass = @turn * 3.14 / 180
+      @cameras.rotation.set 0, compass, 0
+      @cameras.rotateOnAxis @axis, rotation
+
       # move the camera in the @scene
       #@cameras.rotation.y += 0.1  if @keys[37] # left
       #@cameras.translateZ -50  if @pressed(@keys[38]) # forward
