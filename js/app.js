@@ -131,6 +131,18 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       compass = this.turn * 3.14 / 180;
       this.cameras.rotation.set(0, compass, 0);
       this.cameras.rotateOnAxis(this.axis, rotation);
+      if (this.keys[37]) {
+        this.cameras.rotation.y += 0.1;
+      }
+      if (this.keys[38]) {
+        this.cameras.translateZ(-50);
+      }
+      if (this.keys[39]) {
+        this.cameras.rotation.y += -0.1;
+      }
+      if (this.keys[40]) {
+        this.cameras.translateZ(50);
+      }
       this.ghost.animate(t);
       this.bunnies.forEach((function(_this) {
         return function(bunny) {

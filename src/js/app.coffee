@@ -32,7 +32,7 @@ define [
 
       # 0 = no 3d; 1 = cardboard, preserve aspect; 2 = tv, adjust aspect ratio
       @in3d = 1
-      separation = 10
+      separation = 10 # positive for tv, cardboard. negative to do eye-crossing trick
       @cameras = new THREE.Object3D()
       lookingAtPoint = new THREE.Vector3(0, 0, -1000)
       @scene.add @cameras
@@ -127,6 +127,11 @@ define [
       compass = @turn * 3.14 / 180
       @cameras.rotation.set 0, compass, 0
       @cameras.rotateOnAxis @axis, rotation
+
+      @cameras.rotation.y += 0.1  if @keys[37] # left
+      @cameras.translateZ -50  if @keys[38] # forward
+      @cameras.rotation.y += -0.1  if @keys[39] # right
+      @cameras.translateZ 50  if @keys[40] # reverse
       
       @ghost.animate t
 
