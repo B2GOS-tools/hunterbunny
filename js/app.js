@@ -99,6 +99,8 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       this.scene.add(candle);
       candle.castShadow = true;
       this.scene.updateMatrixWorld(true);
+      this.forward = 90;
+      this.turn = 0;
       document.addEventListener("keydown", (function(_this) {
         return function(event) {
           var key;
@@ -132,13 +134,13 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       this.cameras.rotation.set(0, compass, 0);
       this.cameras.rotateOnAxis(this.axis, rotation);
       if (this.keys[37]) {
-        this.cameras.rotation.y += 0.1;
+        this.turn += 1;
       }
       if (this.keys[38]) {
         this.cameras.translateZ(-50);
       }
       if (this.keys[39]) {
-        this.cameras.rotation.y += -0.1;
+        this.turn -= 1;
       }
       if (this.keys[40]) {
         this.cameras.translateZ(50);

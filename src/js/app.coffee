@@ -93,6 +93,9 @@ define [
       candle.castShadow = true
       @scene.updateMatrixWorld true
 
+      @forward = 90
+      @turn = 0
+
       document.addEventListener "keydown", (event) =>
         key = event.keyCode
         @keys[key] = 1
@@ -128,9 +131,9 @@ define [
       @cameras.rotation.set 0, compass, 0
       @cameras.rotateOnAxis @axis, rotation
 
-      @cameras.rotation.y += 0.1  if @keys[37] # left
+      @turn += 1  if @keys[37] # left
       @cameras.translateZ -50  if @keys[38] # forward
-      @cameras.rotation.y += -0.1  if @keys[39] # right
+      @turn -= 1  if @keys[39] # right
       @cameras.translateZ 50  if @keys[40] # reverse
       
       @ghost.animate t
