@@ -99,12 +99,10 @@ define [
       document.addEventListener "keydown", (event) =>
         key = event.keyCode
         @keys[key] = 1
-        return
 
       document.addEventListener "keyup", (event) =>
         key = event.keyCode
         @keys[key] = 0
-        return
         
       window.addEventListener 'deviceorientation', ((event) =>
         [@forward, @side] = if @width < @height
@@ -141,12 +139,10 @@ define [
       @bunnies.forEach (bunny) =>
         bunny.run t, 0  if @keys[90]
         bunny.animate t
-        return
 
       @frogs.forEach (frog) =>
         frog.run t, 0  if @keys[90]
         frog.animate t
-        return
 
       @scene.simulate()
 

@@ -1,7 +1,3 @@
-# run is called when we start moving the character
-# animate below is called in the slow (animate) loop
-# gallop gets called from animate while the character is still moving
-# @body.applyImpulse force, f1 # makes the character hop out of the scene
 
 class Ghost
   constructor: ->
@@ -71,6 +67,7 @@ class Critter
     @backFeet.add @foot4
     @foot4.position.set 17, 0, 0
 
+  # start running
   run: (t, sidemotion) ->
     unless @running
       @offset = -t
@@ -84,7 +81,9 @@ class Critter
       f2.getPositionFromMatrix @foot2.matrixWorld
       force = f1.sub f2
       force.multiplyScalar self.sidemotion * thrust
+      #@body.applyImpulse force, f1 # makes the character hop out of the scene
 
+  # animate is called in the slow (animate) loop
   animate: (t) ->
     stopped = 0.9 * Math.PI
     paced = 8 * (t + @offset - stopped)
@@ -101,6 +100,7 @@ class Critter
         @head.rotation.y = 0
         @looking = false
 
+  # gallop gets called from animate while the character is still running
   gallop: (paced, stopped) ->
     thrust = undefined
     if true
