@@ -129,9 +129,9 @@ define [
       @cameras.rotation.set 0, compass, 0
       @cameras.rotateOnAxis @axis, rotation
 
-      @turn += 1  if @keys[37] # left
+      @turn += 3  if @keys[37] # left
       @cameras.translateZ -50  if @keys[38] # forward
-      @turn -= 1  if @keys[39] # right
+      @turn -= 3  if @keys[39] # right
       @cameras.translateZ 50  if @keys[40] # reverse
       
       @ghost.animate t

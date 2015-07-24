@@ -137,10 +137,10 @@ class Bunny extends Critter
     @eye1 = new THREE.Mesh(shape, cover)
     @head.add @eye1
     @eye1.position.set 0, 0, 25
+
     points = []
     pcount = 16
     i = 0
-
     while i < pcount
       points.push new THREE.Vector3(Math.sqrt(25 * (Math.sin(i * 0.2) + 0.2 * Math.sin(i * 0.4))), 0, 45 - 3 * i)
       i++
