@@ -105,14 +105,14 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
         return function(event) {
           var key;
           key = event.keyCode;
-          _this.keys[key] = 1;
+          return _this.keys[key] = 1;
         };
       })(this));
       document.addEventListener("keyup", (function(_this) {
         return function(event) {
           var key;
           key = event.keyCode;
-          _this.keys[key] = 0;
+          return _this.keys[key] = 0;
         };
       })(this));
       window.addEventListener('deviceorientation', ((function(_this) {
@@ -134,13 +134,13 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       this.cameras.rotation.set(0, compass, 0);
       this.cameras.rotateOnAxis(this.axis, rotation);
       if (this.keys[37]) {
-        this.turn += 1;
+        this.turn += 3;
       }
       if (this.keys[38]) {
         this.cameras.translateZ(-50);
       }
       if (this.keys[39]) {
-        this.turn -= 1;
+        this.turn -= 3;
       }
       if (this.keys[40]) {
         this.cameras.translateZ(50);
@@ -151,7 +151,7 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
           if (_this.keys[90]) {
             bunny.run(t, 0);
           }
-          bunny.animate(t);
+          return bunny.animate(t);
         };
       })(this));
       this.frogs.forEach((function(_this) {
@@ -159,7 +159,7 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
           if (_this.keys[90]) {
             frog.run(t, 0);
           }
-          frog.animate(t);
+          return frog.animate(t);
         };
       })(this));
       return this.scene.simulate();
