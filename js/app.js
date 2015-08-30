@@ -19,7 +19,7 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
     };
 
     _Class.prototype.init = function() {
-      var bunny, candle, cover, floor, frog, i, lookingAtPoint, mazewall, orientationEvent, separation, shape, supportsOrientationChange, wall;
+      var bunny, candle, cover, floor, frog, i, lookingAtPoint, mazewall, orientationEvent, separation, shape, sky, skyMaterial, supportsOrientationChange, wall;
       Physijs.scripts.ammo = "../ammo.js/builds/ammo.js";
       Physijs.scripts.worker = "../bower_components/physijs/physijs_worker.js";
       this.scene = new Physijs.Scene({
@@ -46,11 +46,11 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       lookingAtPoint = new THREE.Vector3(0, 0, -1000);
       this.scene.add(this.cameras);
       this.cameras.position.set(0, 0, 700);
-      this.cameraLeft = new THREE.PerspectiveCamera(45, 1, 1, 4000);
+      this.cameraLeft = new THREE.PerspectiveCamera(45, 1, 1, 14000);
       this.cameras.add(this.cameraLeft);
       this.cameraLeft.lookAt(lookingAtPoint);
       this.cameraLeft.position.set(-separation, 0, 0);
-      this.cameraRight = new THREE.PerspectiveCamera(45, 1, 1, 4000);
+      this.cameraRight = new THREE.PerspectiveCamera(45, 1, 1, 14000);
       this.cameras.add(this.cameraRight);
       this.cameraRight.lookAt(lookingAtPoint);
       this.cameraRight.position.set(separation, 0, 0);
@@ -73,6 +73,11 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       mazewall = new Physijs.BoxMesh(shape, cover);
       mazewall.position.set(0, 200, 0);
       this.scene.add(mazewall);
+      skyMaterial = new THREE.MeshBasicMaterial();
+      skyMaterial.color.setRGB(0, 0, 0.5);
+      skyMaterial.side = THREE.DoubleSide;
+      sky = new THREE.Mesh(new THREE.CubeGeometry(10000, 10000, 10000, 1, 1, 1, null, true), skyMaterial);
+      this.scene.add(sky);
       this.ghost = new Ghost();
       this.scene.add(this.ghost.body);
       this.bunnies = [];
@@ -118,21 +123,30 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       window.addEventListener('deviceorientation', ((function(_this) {
         return function(event) {
           var beta, gamma, _ref;
-          _ref = _this.width < _this.height ? [event.beta, event.gamma] : (beta = -event.gamma, gamma = event.beta, Math.abs(gamma) > 90 ? beta = 180 - beta : void 0, [beta, gamma]), _this.forward = _ref[0], _this.side = _ref[1];
-          return _this.turn = event.alpha;
+          return _ref = _this.width < _this.height ? [event.beta, event.gamma] : (beta = -event.gamma, gamma = event.beta, Math.abs(gamma) > 90 ? beta = 180 - beta : void 0, [beta, gamma]), _this.forward = _ref[0], _this.side = _ref[1], _ref;
         };
       })(this)), true);
       this.axis = new THREE.Vector3(1, 0, 0);
-      return this.clock = new THREE.Clock();
+      this.clock = new THREE.Clock();
+      return this.turn = 0;
     };
 
     _Class.prototype.animate = function() {
       var compass, rotation, t;
       t = this.clock.getElapsedTime();
       rotation = (this.forward - 90) * 3.14 / 180;
+      if (this.printed !== Math.floor(t / 10)) {
+        this.printed = Math.floor(t / 10);
+        console.log("tilt: " + this.forward + "," + this.side + "," + t);
+      }
+      this.turn += this.side < -20 ? 1 : this.side > 20 ? -1 : 0;
       compass = this.turn * 3.14 / 180;
       this.cameras.rotation.set(0, compass, 0);
-      this.cameras.rotateOnAxis(this.axis, rotation);
+      if (this.forward < 75) {
+        this.cameras.translateZ(-25);
+      } else if (this.forward > 105) {
+        this.cameras.translateZ(25);
+      }
       if (this.keys[37]) {
         this.turn += 3;
       }
@@ -145,6 +159,7 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       if (this.keys[40]) {
         this.cameras.translateZ(50);
       }
+      this.cameras.rotateOnAxis(this.axis, rotation);
       this.ghost.animate(t);
       this.bunnies.forEach((function(_this) {
         return function(bunny) {
@@ -196,7 +211,7 @@ define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
       if (this.smoothness >= 60) {
         this.render();
       } else {
-        setInterval(this.render, 1000 / this.smoothness);
+        setInterval(this.render, 500 / this.smoothness);
       }
       return setInterval(this.animate, 50);
     };

@@ -37,11 +37,11 @@ define [
       lookingAtPoint = new THREE.Vector3(0, 0, -1000)
       @scene.add @cameras
       @cameras.position.set 0, 0, 700
-      @cameraLeft = new THREE.PerspectiveCamera(45, 1, 1, 4000)
+      @cameraLeft = new THREE.PerspectiveCamera(45, 1, 1, 14000)
       @cameras.add @cameraLeft
       @cameraLeft.lookAt lookingAtPoint
       @cameraLeft.position.set -separation, 0, 0
-      @cameraRight = new THREE.PerspectiveCamera(45, 1, 1, 4000)
+      @cameraRight = new THREE.PerspectiveCamera(45, 1, 1, 14000)
       @cameras.add @cameraRight
       @cameraRight.lookAt lookingAtPoint
       @cameraRight.position.set separation, 0, 0
@@ -65,6 +65,12 @@ define [
       mazewall = new Physijs.BoxMesh(shape, cover)
       mazewall.position.set 0, 200, 0
       @scene.add mazewall
+      skyMaterial = new THREE.MeshBasicMaterial()
+      skyMaterial.color.setRGB 0, 0, 0.5
+      skyMaterial.side = THREE.DoubleSide
+      sky = new THREE.Mesh(new THREE.CubeGeometry(10000, 10000, 10000, 1, 1, 1, null, true), skyMaterial)
+      @scene.add sky
+
       @ghost = new Ghost()
       @scene.add @ghost.body
 
@@ -115,24 +121,41 @@ define [
           if(Math.abs(gamma) > 90)
             beta = 180 - beta
           [beta, gamma]
-        @turn = event.alpha
+        #@turn = event.alpha # compass reading is too sketchy to use for direction
         ), true
 
       @axis = new THREE.Vector3 1,0,0
       @clock = new THREE.Clock()
+      @turn = 0
 
     animate: =>
       t = @clock.getElapsedTime()
       
       rotation = (@forward - 90) * 3.14 / 180
+      if @printed != t // 10
+       @printed = t // 10
+       console.log "tilt: #{@forward},#{@side},#{t}"
+        
+      @turn += if @side < -20
+        1
+      else if @side > 20
+        -1
+      else
+        0
       compass = @turn * 3.14 / 180
       @cameras.rotation.set 0, compass, 0
-      @cameras.rotateOnAxis @axis, rotation
+      
+      if @forward < 75
+        @cameras.translateZ -25
+      else if @forward > 105
+        @cameras.translateZ 25
 
       @turn += 3  if @keys[37] # left
       @cameras.translateZ -50  if @keys[38] # forward
       @turn -= 3  if @keys[39] # right
       @cameras.translateZ 50  if @keys[40] # reverse
+      
+      @cameras.rotateOnAxis @axis, rotation
       
       @ghost.animate t
 
@@ -171,6 +194,6 @@ define [
       if @smoothness >= 60
         @render()
       else
-        setInterval @render, 1000 / @smoothness
+        setInterval @render, 500 / @smoothness
       setInterval @animate, 50
 
