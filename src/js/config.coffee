@@ -6,19 +6,17 @@ require.config
     three:
       exports: "THREE"
 
-    physi:
+    threex:
       deps: ["three"]
-      exports: "Physijs"
+      exports: "THREEx"
 
   paths:
     text: "../lib/text"
     shader: "../lib/shader"
     shaders: "../shaders"
-    ammo: "../bower_components/ammo.js/builds/ammo"
     three: "../bower_components/threejs/build/three"
     threeCore: "../bower_components/threejs/build/three.min"
-    physi: "../bower_components/physijs/physi"
-    physijs_worker: "../bower_components/physijs/physijs_worker"
+    threex: "../bower_components/threex.cannonjs"
     requirejs: "../bower_components/requirejs/require"
     bunnies: "../js/bunnies"
 

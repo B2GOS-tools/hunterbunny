@@ -2,11 +2,10 @@
   "name": "bunnyhunter",
   "version": "0.0.1",
   "dependencies": {
-    "physijs": "latest",
     "requirejs": "~2.1.15",
-    "threejs": "*"
+    "threex.cannonjs": "latest",
+    "threejs": "latest"
   },
   "resolutions": {
-    "threejs": "r59"
   }
 }
