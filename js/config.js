@@ -7,20 +7,20 @@ require.config({
     three: {
       exports: "THREE"
     },
-    physi: {
-      deps: ["three"],
-      exports: "Physijs"
+    threex: {
+      deps: ["three", "cannon", "cannonbody"],
+      exports: "THREEx"
     }
   },
   paths: {
     text: "../lib/text",
     shader: "../lib/shader",
     shaders: "../shaders",
-    ammo: "../bower_components/ammo.js/builds/ammo",
     three: "../bower_components/threejs/build/three",
     threeCore: "../bower_components/threejs/build/three.min",
-    physi: "../bower_components/physijs/physi",
-    physijs_worker: "../bower_components/physijs/physijs_worker",
+    threex: "../bower_components/threex.cannonjs/threex.cannonworld",
+    cannonbody: "../bower_components/threex.cannonjs/threex.cannonbody",
+    cannon: "../bower_components/threex.cannonjs/vendor/cannon.js/build/cannon",
     requirejs: "../bower_components/requirejs/require",
     bunnies: "../js/bunnies"
   },

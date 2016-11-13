@@ -2,7 +2,7 @@
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-define(["three", "physi", "bunnies"], function(THREE, Physijs, bunnies) {
+define(["three", "threex", "bunnies"], function(THREE, THREEx, bunnies) {
   return new ((function() {
     function _Class() {
       this.render = __bind(this.render, this);

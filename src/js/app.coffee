@@ -1,6 +1,6 @@
 define [
   "three"
-  "threex.cannonjs"
+  "threex"
   "bunnies"
 ], (THREE, THREEx, bunnies) ->
 
@@ -31,7 +31,7 @@ define [
       @keys = []
 
       # 0 = no 3d; 1 = cardboard, preserve aspect; 2 = tv, adjust aspect ratio
-      @in3d = 0
+      @in3d = 1
       separation = 10 # positive for tv, cardboard. negative to do eye-crossing trick
       @cameras = new THREE.Object3D()
       lookingAtPoint = new THREE.Vector3(0, 0, -1000)

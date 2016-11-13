@@ -7,7 +7,7 @@ require.config
       exports: "THREE"
 
     threex:
-      deps: ["three"]
+      deps: ["three", "cannon", "cannonbody"]
       exports: "THREEx"
 
   paths:
@@ -16,7 +16,9 @@ require.config
     shaders: "../shaders"
     three: "../bower_components/threejs/build/three"
     threeCore: "../bower_components/threejs/build/three.min"
-    threex: "../bower_components/threex.cannonjs"
+    threex: "../bower_components/threex.cannonjs/threex.cannonworld"
+    cannonbody: "../bower_components/threex.cannonjs/threex.cannonbody"
+    cannon: "../bower_components/threex.cannonjs/vendor/cannon.js/build/cannon"
     requirejs: "../bower_components/requirejs/require"
     bunnies: "../js/bunnies"
 
