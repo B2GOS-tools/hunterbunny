@@ -20,12 +20,7 @@ define(["three", "threex", "bunnies"], function(THREE, THREEx, bunnies) {
 
     _Class.prototype.init = function() {
       var bunny, candle, cover, floor, frog, i, lookingAtPoint, mazewall, orientationEvent, separation, shape, sky, skyMaterial, supportsOrientationChange, wall;
-      Physijs.scripts.ammo = "../ammo.js/builds/ammo.js";
-      Physijs.scripts.worker = "../bower_components/physijs/physijs_worker.js";
-      this.scene = new Physijs.Scene({
-        fixedTimeStep: 2 / 60
-      });
-      this.scene.setGravity(new THREE.Vector3(0, -100, 0));
+      this.world = new THREEx.CannonWorld().start();
       this.renderer = new THREE.WebGLRenderer({
         antialias: true
       });

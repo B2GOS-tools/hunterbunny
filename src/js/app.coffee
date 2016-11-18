@@ -14,11 +14,7 @@ define [
       @width = @renderer.domElement.width
       
     init: ->
-      Physijs.scripts.ammo = "../ammo.js/builds/ammo.js"
-      Physijs.scripts.worker = "../bower_components/physijs/physijs_worker.js"
-
-      @scene = new Physijs.Scene(fixedTimeStep: 2 / 60)
-      @scene.setGravity new THREE.Vector3(0, -100, 0)
+      @world = new THREEx.CannonWorld().start()
       @renderer = new THREE.WebGLRenderer(antialias: true)
       @size()
       supportsOrientationChange = 'onorientationchange' in window
