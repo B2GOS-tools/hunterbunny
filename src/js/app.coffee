@@ -14,7 +14,8 @@ define [
       @width = @renderer.domElement.width
       
     init: ->
-      @world = new THREEx.CannonWorld().start()
+      @world = (new THREEx.CannonWorld()).start()
+      @scene = new THREE.Scene()
       @renderer = new THREE.WebGLRenderer(antialias: true)
       @size()
       supportsOrientationChange = 'onorientationchange' in window
@@ -52,13 +53,13 @@ define [
       shape = new THREE.CubeGeometry(5000, 10, 5000)
       cover = new THREE.MeshBasicMaterial()
       cover.color.setRGB 0.8, 0.5, 0.3
-      floor = new Physijs.BoxMesh(shape, cover, 0)
+      floor = new THREE.Mesh(shape, cover, 0)
       floor.position.set 0, -100, 0
       @scene.add floor
       shape = new THREE.CubeGeometry(500, 400, 50)
       cover = new THREE.MeshBasicMaterial()
       cover.color.setRGB 0.0, 1.0, 0.0
-      mazewall = new Physijs.BoxMesh(shape, cover)
+      mazewall = new THREE.Mesh(shape, cover)
       mazewall.position.set 0, 200, 0
       @scene.add mazewall
       skyMaterial = new THREE.MeshBasicMaterial()
