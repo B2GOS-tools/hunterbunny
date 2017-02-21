@@ -1,0 +1,33 @@
+{
+  "name": "bunnyhunter",
+  "version": "0.0.1",
+  "dependencies": {
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.10.0",
+    "requirejs": "~2.1.15",
+    "cannon": "latest",
+    "three": "latest"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --config config/webpack.config.js",
+    "test": "karma start config/karma.config.js"
+  },
+  "description": "firefoxos stereoscopic 3d demo",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmidgley/hunterbunny.git"
+  },
+  "keywords": [
+    "javascript",
+    "game",
+    "3d"
+  ],
+  "author": "Brad Midgley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmidgley/hunterbunny/issues"
+  },
+  "homepage": "https://github.com/bmidgley/hunterbunny#readme"
+}
